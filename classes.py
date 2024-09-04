@@ -13,16 +13,18 @@ class GenericPlayer:
 
     @property
     def name(self):
-        return self.__name if not isinstance(self.__name, None) else "IA"
+        return self.__name
 
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
             if value is not None:
                 raise TypeError(f"tipo de dado inválido para o nome do jogador: {value}")
+            else:
+                self.__name = "IA"
             raise TypeError(f"tipo de dado inválido para o nome do jogador: {value}")
         else:
-            self.__name = value if value is not None else "IA"
+            self.__name = value
 
     @property
     def choice(self):
@@ -70,12 +72,13 @@ class GenericPlayer:
         if not (isinstance(p1, GenericPlayer) and isinstance(p2, GenericPlayer)):
             raise TypeError("o placar deve ser criado para 2 jogadores")
 
-        top_padding = "||"
-        label = "|Placar Final:|"
-        score = f"|{p1.name}: {p1.wins} {p2.name}: {p2.wins}|"
-        bottom_padding = "||"
+        top_padding = f"|{"".center(24, "-")}|"
+        label = f"|{"Placar:".center(18)}|"
+        score = f"{p1.name}: {p1.wins} {p2.name}: {p2.wins}"
+        score_string = f"|{score.center(int(24 - (len(score) / 2)))}|"
+        bottom_padding = f"|{"".center(24, "-")}|"
 
-        return top_padding + "\n" + label + "\n" + score + "\n" + bottom_padding
+        return top_padding + "\n" + label + "\n" + score_string + "\n" + bottom_padding
 
     @staticmethod
     def final_scoreboard(p1, p2):

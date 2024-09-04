@@ -16,18 +16,19 @@ if __name__ == '__main__':
         while True:
             try:
                 choice = int(input("\nTabela de Ações:\n1 - Pedra\n2 - Papel\n3 - Tesoura\n\nEscolha sua ação: "))
-                break
             except ValueError:
                 print("\nValueError: a opção do jogador deve ser um número inteiro")
                 continue
-        while True:
+            ia_choice = p_ia.choiceIA()
+            print(f"Escolha da IA: {ia_choice}")
             try:
                 p1.choice = choice
                 break
             except ValueError or TypeError as e:
                 print("\n" + str(e))
                 continue
-        ia_choice = p_ia.choiceIA()
+
         p.duel(p1, p_ia)
+        print("\n" + p.scoreboard(p1, p_ia))
     else:
         p.final_scoreboard(p1, p_ia)
