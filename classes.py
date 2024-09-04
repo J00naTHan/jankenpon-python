@@ -72,11 +72,11 @@ class GenericPlayer:
         if not (isinstance(p1, GenericPlayer) and isinstance(p2, GenericPlayer)):
             raise TypeError("o placar deve ser criado para 2 jogadores")
 
-        top_padding = f"|{"".center(24, "-")}|"
-        label = f"|{"Placar:".center(18)}|"
+        top_padding = f"|{''.center(24, '-')}|"
+        label = f"|{'Placar:'.center(18)}|"
         score = f"{p1.name}: {p1.wins} {p2.name}: {p2.wins}"
         score_string = f"|{score.center(int(24 - (len(score) / 2)))}|"
-        bottom_padding = f"|{"".center(24, "-")}|"
+        bottom_padding = f"|{''.center(24, '-')}|"
 
         return top_padding + "\n" + label + "\n" + score_string + "\n" + bottom_padding
 

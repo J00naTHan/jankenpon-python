@@ -19,8 +19,7 @@ if __name__ == '__main__':
             except ValueError:
                 print("\nValueError: a opção do jogador deve ser um número inteiro")
                 continue
-            ia_choice = p_ia.choiceIA()
-            print(f"Escolha da IA: {ia_choice}")
+            print(f"Escolha da IA: {p_ia.choiceIA()}")
             try:
                 p1.choice = choice
                 break
