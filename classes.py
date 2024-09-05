@@ -2,7 +2,7 @@ import random as rd
 
 
 class GenericPlayer:
-    CHOICES = {1: "rock", 2: "paper", 3: "scissor"}
+    CHOICES = {1: "pedra", 2: "papel", 3: "tesoura"}
 
     def __init__(self):
         self.__name = None
@@ -18,12 +18,10 @@ class GenericPlayer:
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
-            if value is not None:
-                raise TypeError(f"tipo de dado inválido para o nome do jogador: {value}")
-            else:
-                self.__name = "IA"
             raise TypeError(f"tipo de dado inválido para o nome do jogador: {value}")
         else:
+            if len(value) > 14:
+                raise ValueError(f"nome de jogador deve ter um comprimento menor ou igual a 14 caracteres: {value}")
             self.__name = value
 
     @property
@@ -66,24 +64,25 @@ class GenericPlayer:
             p2.wins += 1
 
     @staticmethod
-    def scoreboard(p1, p2):
+    def scoreboard(p1, p2, state=None):
         # função que retorna um placar formatado comparando as vitórias de 2 jogadores, tipo: str
-
         if not (isinstance(p1, GenericPlayer) and isinstance(p2, GenericPlayer)):
             raise TypeError("o placar deve ser criado para 2 jogadores")
 
-        top_padding = f"|{''.center(24, '-')}|"
-        label = f"|{'Placar:'.center(18)}|"
-        score = f"{p1.name}: {p1.wins} {p2.name}: {p2.wins}"
-        score_string = f"|{score.center(int(24 - (len(score) / 2)))}|"
-        bottom_padding = f"|{''.center(24, '-')}|"
+        hor_line = f"|{'-' * 25}|"
+        label = f"|{'Placar:'.center(25)}|"
+        score = f"|{f'{p1.name}: {p1.wins} {p2.name}: {p2.wins}'.center(25)}|"
 
-        return top_padding + "\n" + label + "\n" + score_string + "\n" + bottom_padding
-
-    @staticmethod
-    def final_scoreboard(p1, p2):
-        # mesmo que o de cima, mas formatado para o placar final
-        pass
+        if state == "final":
+            final_label = f"|{'Placar Final:'.center(25)}|"
+            if p1.wins > p2.wins:
+                if p1.name != "IA":
+                    return hor_line + "\n" + final_label + "\n" + score + "\n" + hor_line + "\n\n" + f"Parabéns: {p1.name}!"
+            elif p2.wins > p1.wins:
+                if p2.name != "IA":
+                    return hor_line + "\n" + final_label + "\n" + score + "\n" + hor_line + "\n\n" + f"Parabéns: {p2.name}!"
+        else:
+            return hor_line + "\n" + label + "\n" + score + "\n" + hor_line
 
 
 class Player(GenericPlayer):
@@ -95,6 +94,7 @@ class Player(GenericPlayer):
 class IAPlayer(GenericPlayer):
     def __init__(self):
         super().__init__()
+        self.name = "IA"
 
     def choiceIA(self):
         choice = rd.randint(1, 3)
