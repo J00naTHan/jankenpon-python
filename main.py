@@ -1,4 +1,4 @@
-from classes import Player as p, IAPlayer as ia
+from player import Player as p, IAPlayer as ia
 
 
 if __name__ == '__main__':
