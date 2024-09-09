@@ -23,20 +23,23 @@ if __name__ == '__main__':
         while True:
             try:
                 choice = int(input("\nTabela de Ações:\n1 - Pedra\n2 - Papel\n3 - Tesoura\nEscolha sua ação: "))
+                print(f"\nEscolha de {p1.name}: {p.CHOICES[choice]}")
+                print(f"Escolha da IA: {p.CHOICES[p_ia.choiceIA()]}")
             except ValueError:
                 print("\nValueError: a opção do jogador deve ser um número inteiro")
                 continue
-            print(f"\nEscolha de {p1.name}: {p.CHOICES[choice]}")
-            print(f"Escolha da IA: {p.CHOICES[p_ia.choiceIA()]}")
+            except KeyError:
+                print("\nKeyError: a opção do jogador deve ser 1, 2 ou 3")
+                continue
             try:
                 p1.choice = choice
                 break
             except ValueError or TypeError as e:
                 print("\n" + str(e))
                 continue
-        turn += 1
         p.duel(p1, p_ia)
         if turn < 3 or (turn >= 3 and p1.wins == p_ia.wins):
             print("\n" + p.scoreboard(p1, p_ia))
+        turn += 1
     else:
         print("\n" + p.scoreboard(p1, p_ia, "final"))
